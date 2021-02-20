@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Vue Js - HelloWorld App</title>
+
+  <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+  <!-- Using via Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- https://tailwindcss.com/docs/installation -->
+  <!-- Using Tailwind via CDN -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@next"></script>
+
+</head>
+
+<body>
+ 
+  <div id="app" class="space-y-4">
+    <div class="text-center font-mono text-4xl medium py-8">Photo Gallery ({{count}})</div>
+    <div class="flex space-y-4  justify-center">
+      <div v-if="check" class="space-x-4">
+        <input  @keyup.enter='searchPressenter' class="text border" v-model="inputTask" placeholder="Enter a new task ..."
+          class="p-2 bg-white rounded flex-1 border-b-2 border-blue-300">
+        <button @click="popup" class="bg-green-500 text-white  py-1 px-6 rounded">cancel</button>
+      </div>
+      <i @click="popup" class="material-icons" v-if="!check">
+        search
+      </i>
+    </div>
+    <div v-show="bigpic">
+      <div v-for="(task2,index) in selectpic" class="px-1.5 flex space-x-4 justify-center items-center bg-black">
+        <i class="material-icons text-7xl text-white" @click="chevron_left">
+          chevron_left
+        </i>
+        <div class="relative">
+          <div class="absolute top-1 right-1  ">
+            <i class="material-icons text-5xl text-black animate-pulse" v-on:click="closebp">
+              cancel
+            </i>
+          </div>
+          <img :src="task2.image" class="w-96" v-if="!task2.done" />
+          <img :src="task2.imagelike" class="w-96" v-if="task2.done" />
+        </div>
+        <i class="material-icons text-7xl text-white" @click="chevron_right">
+          chevron_right
+        </i>
+      </div>
+    </div>
+    <div class="flex space-x-4 justify-center">
+      <div v-for="(task,index) in tasks" class="px-1.5 " v-show="switchtrue ">
+        <img :src="task.image" @click="zoomuppic(index)" class="h-96" v-if="!task.done" />
+        <img :src="task.imagelike" @click="zoomuppic(index)" class="h-96" v-if="task.done" />
+        <div class="flex  justify-center py-5">
+          <div class="font-mono text-xl medium " v-if="!task.done">{{task.article}}</div>
+          <div class="font-mono text-xl medium text-red-500" v-if="task.done">{{task.article}}</div>
+          <i class="material-icons" v-on:click="toggleDone(index)" v-show="!task.done">
+            favorite_border
+          </i>
+          <i class="material-icons text-red-400 animate-pulse" v-on:click="toggleDone(index)" v-show="task.done">
+            favorite
+          </i>
+        </div>
+      </div>
+      <div v-for="(task,index) in findingnemo" class="px-1.5" v-if ="switchfalse">
+        <img :src="task.image" @click="zoomuppic(index)" class="h-96" v-if="!task.done" />
+        <img :src="task.imagelike" @click="zoomuppic(index)" class="h-96" v-if="task.done" />
+        <div class="flex  justify-center py-5">
+          <div class="font-mono text-xl medium " v-if="!task.done">{{task.article}}</div>
+          <div class="font-mono text-xl medium text-red-500" v-if="task.done">{{task.article}}</div>
+          <i class="material-icons" v-on:click="toggleDoneNemo(index)" v-show="!task.done">
+            favorite_border
+          </i>
+          <i class="material-icons text-red-400 animate-pulse" v-on:click="toggleDoneNemo(index)" v-show="task.done">
+            favorite
+          </i>
+        </div>
+      </div>
+      <div v-if="notfind">
+        'No photo'
+      </div>
+    </div>
+  </div>
+  <!-- my main.js -->
+  <script src="./main.js"></script>
+</body>
+
+</html>
